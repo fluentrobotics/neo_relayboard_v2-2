@@ -554,8 +554,10 @@ void NeoRelayBoardNode::PublishBatteryState()
 	fBatteryVoltage = iBatteryVoltage / 1000.f;
 
 	if(fBatteryVoltage > 36) {
-		const float vmin = 44.0;
-		const float vmax = 49.5;
+		// Approximate AGM state of charge from resting-voltage reference points
+		// chosen to help avoid deep discharge.
+		const float vmin = 47.2;
+		const float vmax = 52.0;
 		fBatteryPercentage = fmin(fmax((fBatteryVoltage - vmin) / (vmax - vmin), 0), 1);
 	} else if(fBatteryVoltage > 18) {
 		const float vmin = 22.5;
